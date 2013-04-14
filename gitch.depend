@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1365982697 source:c:\documents and settings\norbert joseph\my documents\codeblocks projects\gitch\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<fstream>
+	<ctype.h>
+
