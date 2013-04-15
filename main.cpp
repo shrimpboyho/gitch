@@ -16,6 +16,8 @@ void checky();
 void beginInit();
 void runtimeExec(int argc, char* argv[]);
 void loadCommands();
+void printCommands();
+
 
 /*GLOBAL VARIABLES*/
 
@@ -41,6 +43,7 @@ int main ( int argc, char *argv[] )
         }else{
 
             loadCommands();
+            printCommands();
             runtimeExec(argc,argv);
 
         }
@@ -116,26 +119,29 @@ void runtimeExec(int argc, char* argv[]){
 
     }else{
 
-        fstream file;
-        file.open("gitch.txt", ios_base::out | ios_base::in);
-        if (file.is_open() == true){
+
 
                 int i;
 
                 for(i = 1; i < argc; i++){
 
-                    if((string)argv[i] == gitch_commands[i]){
-                        command = command + git_commands[i] + " ";
+                    for(k = 0;k<gitch_commands.size();k++){
+
+                        if((string)argv[i] == gitch_commands[k]){
+                            command = command + git_commands[k] + " ";
+                        }
                     }
 
                 }
 
-                cout << "\nSending this command to git: "<< command;
+
+
+                cout << "\nSending this command to git: "<< command << endl;
 
                 system(command.c_str());
 
 
-        }
+
 
     }
 
@@ -176,6 +182,19 @@ void loadCommands(){
 
     }
 
+
+
+}
+
+void printCommands(){
+
+    int i; // loop counter
+
+    cout << "\nCOMMANDS:\n";
+
+    for(i = 0; i < gitch_commands.size(); i++){
+        cout << "\n" << gitch_commands[i] << " = " << git_commands[i];
+    }
 
 
 }
