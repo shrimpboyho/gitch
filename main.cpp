@@ -29,7 +29,7 @@ int main ( int argc, char *argv[] )
 
     /* CHECK IF NO ARGUMENTS ARE PASSED */
 
-    if ( argc != 2 ) /* argc should be 2 for correct execution */
+    if ( argc < 2 ) /* argc should be 2 for correct execution */
     {
         /* We print argv[0] assuming it is the program name */
         printf( "usage: %s <command>\n\nRefer to online documentation for more information.\n", argv[0] );
@@ -71,7 +71,7 @@ void checky(){
             }
 
             if((tolower(option)!='y')&&(tolower(option)!='n')){
-                cout << "Not a valid answer. Y or N only";
+                cout << "Not a valid answer. Y or N only\n\n";
                 checky();
             }
 
@@ -107,7 +107,7 @@ void runtimeExec(int argc, char* argv[]){
     // Looping variables
 
     int i, k;
-    string command;
+    string command = "git ";
     bool overflow = false;
 
     if((string)argv[1] == "replace"){
@@ -116,11 +116,27 @@ void runtimeExec(int argc, char* argv[]){
 
     }else{
 
-        command = "git " + git_commands[0];
+        fstream file;
+        file.open("gitch.txt", ios_base::out | ios_base::in);
+        if (file.is_open() == true){
+
+                int i;
+
+                for(i = 1; i < argc; i++){
+
+                    if((string)argv[i] == gitch_commands[i]){
+                        command = command + git_commands[i] + " ";
+                    }
+
+                }
+
+                cout << "\nSending this command to git: "<< command;
+
+                system(command.c_str());
 
 
-        cout << "Send this command to git: \n" << command << "\n\n";
-        system(command.c_str());
+        }
+
     }
 
 
@@ -135,6 +151,11 @@ void loadCommands(){
     TextFileToArray parser("gitch.txt", ';');
 
     parser.vectorfiller(&user_settings);
+
+    // Create an empty 0th index
+
+    gitch_commands.push_back("");
+    git_commands.push_back("");
 
     // Split string using pystring library.
 
@@ -152,9 +173,6 @@ void loadCommands(){
 
          gitch_commands.push_back(tempstrgitch);
          git_commands.push_back(tempstrgit);
-
-         cout << "GITCH COMMANDS: " << gitch_commands[i] << endl;
-         cout << "GIT COMMANDS: " << git_commands[i] << endl;
 
     }
 
