@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <fstream>
 #include <ctype.h>
+#include <vector>
+#include "dewey.h"
 
 using namespace std;
 
@@ -10,6 +12,14 @@ using namespace std;
 
 void checky();
 void beginInit();
+void runtimeExec(int argc, char* argv[]);
+void loadCommands();
+
+/*GLOBAL VARIABLES*/
+
+vector<string> user_settings;
+vector<string> git_commands;
+vector<string> gitch_commands;
 
 int main ( int argc, char *argv[] )
 {
@@ -26,7 +36,13 @@ int main ( int argc, char *argv[] )
 
         if((string)argv[1] == "init"){
             checky();
+        }else{
+
+            loadCommands();
+            runtimeExec(argc,argv);
+
         }
+
     }
 
 
@@ -83,5 +99,63 @@ void beginInit(){
         cout << "\nInitialized gitch in this location.\n";
 
 }
+
+void runtimeExec(int argc, char* argv[]){
+
+    // Looping variables
+
+    int i, k;
+    string command;
+    bool overflow = false;
+
+    if((string)argv[1] == "replace"){
+
+    }else if((string)argv[1] == "list"){
+
+    }else{
+
+        command = "git ";
+        for(i = 0; i < argc; i++){
+
+            // Find the indexes of the custom args
+
+            for(k = 0; k <= gitch_commands.size(); k++){
+
+                if(k == gitch_commands.size()){
+                    overflow = true;
+                    break;
+                }
+                if(argv[i] == gitch_commands[k]){
+                    break;
+                }
+
+            }
+
+             if(overflow == false){
+                command = command + git_commands[k] + " ";
+             }
+             if(overflow == true){
+                command = command + (string)argv[i] + " ";
+             }
+        }
+
+        cout << "Send this command to git: \n" << command << "\n\n";
+        system(command.c_str());
+    }
+
+
+}
+
+void loadCommands(){
+
+    TextFileToArray parser("gitch.txt", ';');
+
+    parser.vectorfiller(&user_settings);
+
+    // Find a way to splt into 2 derivative vectors at the % delim
+
+
+}
+
 
 
