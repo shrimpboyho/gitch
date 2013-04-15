@@ -5,6 +5,8 @@
 #include <ctype.h>
 #include <vector>
 #include "dewey.h"
+#include <sstream>
+
 
 using namespace std;
 
@@ -114,30 +116,8 @@ void runtimeExec(int argc, char* argv[]){
 
     }else{
 
-        command = "git ";
-        for(i = 0; i < argc; i++){
+        command = "git " + git_commands[0];
 
-            // Find the indexes of the custom args
-
-            for(k = 0; k <= gitch_commands.size(); k++){
-
-                if(k == gitch_commands.size()){
-                    overflow = true;
-                    break;
-                }
-                if(argv[i] == gitch_commands[k]){
-                    break;
-                }
-
-            }
-
-             if(overflow == false){
-                command = command + git_commands[k] + " ";
-             }
-             if(overflow == true){
-                command = command + (string)argv[i] + " ";
-             }
-        }
 
         cout << "Send this command to git: \n" << command << "\n\n";
         system(command.c_str());
@@ -148,11 +128,36 @@ void runtimeExec(int argc, char* argv[]){
 
 void loadCommands(){
 
+    int i; // loop counter
+    string tempstrgitch; // a temporary string
+    string tempstrgit; // a temporary string
+
     TextFileToArray parser("gitch.txt", ';');
 
     parser.vectorfiller(&user_settings);
 
-    // Find a way to splt into 2 derivative vectors at the % delim
+    // Split string using pystring library.
+
+    for(i = 0; i < user_settings.size() - 1 ; i++){
+
+         // Create an input stream
+
+         std::istringstream ss;
+         ss.str(user_settings[i]);
+
+         // Getline with delims
+
+         std::getline(ss, tempstrgitch, '%');
+         std::getline(ss, tempstrgit, '%');
+
+         gitch_commands.push_back(tempstrgitch);
+         git_commands.push_back(tempstrgit);
+
+         cout << "GITCH COMMANDS: " << gitch_commands[i] << endl;
+         cout << "GIT COMMANDS: " << git_commands[i] << endl;
+
+    }
+
 
 
 }

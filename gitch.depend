@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1365994518 source:c:\documents and settings\norbert joseph\my documents\codeblocks projects\gitch\main.cpp
+1366041004 source:c:\documents and settings\norbert joseph\my documents\codeblocks projects\gitch\main.cpp
 	<iostream>
 	<stdio.h>
 	<stdlib.h>
@@ -7,6 +7,7 @@
 	<ctype.h>
 	<vector>
 	"dewey.h"
+	<sstream>
 
 1365991687 c:\documents and settings\norbert joseph\my documents\codeblocks projects\gitch\dewey.h
 	"ArrayToTextFile.h"
@@ -33,5 +34,17 @@
 	<stdlib.h>
 	<sys/types.h>
 	<dirent.h>
+	<vector>
+
+1350412260 source:c:\documents and settings\norbert joseph\my documents\codeblocks projects\gitch\pystring.cpp
+	"pystring.h"
+	<algorithm>
+	<cctype>
+	<cstring>
+	<iostream>
+	<sstream>
+
+1350412260 c:\documents and settings\norbert joseph\my documents\codeblocks projects\gitch\pystring.h
+	<string>
 	<vector>
 
