@@ -48,3 +48,40 @@
 	<string>
 	<vector>
 
+1367537381 source:c:\documents and settings\administrator.esumsroboticsla\my documents\github\gitch\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<fstream>
+	<ctype.h>
+	<vector>
+	"dewey.h"
+	<sstream>
+
+1367518389 c:\documents and settings\administrator.esumsroboticsla\my documents\github\gitch\dewey.h
+	"ArrayToTextFile.h"
+	"TextFileToArray.h"
+	"DirectoryToArray.h"
+	<iostream>
+	<vector>
+	<fstream>
+
+1367518389 c:\documents and settings\administrator.esumsroboticsla\my documents\github\gitch\arraytotextfile.h
+	<iostream>
+	<fstream>
+	<vector>
+
+1367518389 c:\documents and settings\administrator.esumsroboticsla\my documents\github\gitch\textfiletoarray.h
+	<iostream>
+	<fstream>
+	<vector>
+
+1367518389 c:\documents and settings\administrator.esumsroboticsla\my documents\github\gitch\directorytoarray.h
+	<iostream>
+	"dewey.h"
+	<stdio.h>
+	<stdlib.h>
+	<sys/types.h>
+	<dirent.h>
+	<vector>
+

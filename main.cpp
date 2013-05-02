@@ -43,7 +43,6 @@ int main ( int argc, char *argv[] )
         }else{
 
             loadCommands();
-            printCommands();
             runtimeExec(argc,argv);
 
         }
@@ -117,9 +116,13 @@ void runtimeExec(int argc, char* argv[]){
 
     }else if((string)argv[1] == "list"){
 
+        // Print the commands
+
+        printCommands();
+
     }else{
 
-
+        /* RUN THE CUSTOM GITCH COMMAND */
 
                 int i;
 
@@ -188,12 +191,33 @@ void loadCommands(){
 
 void printCommands(){
 
-    int i; // loop counter
+    /*Check to see if the text file is not empty*/
 
-    cout << "\nCOMMANDS:\n";
+    int length;
+    ifstream filestr;
 
-    for(i = 0; i < gitch_commands.size(); i++){
-        cout << "\n" << gitch_commands[i] << " = " << git_commands[i];
+    filestr.open("gitch.txt", ios::binary); // open your file
+
+    filestr.seekg(0, ios::end); // put the "cursor" at the end of the file
+
+    length = filestr.tellg(); // find the position of the cursor
+
+    filestr.close(); // close your file
+
+    if ( length == 0 )
+    {
+        printf("\nYou haven't loaded gitch with any commands. Use the replace command to do so.\n");
+    }
+    else
+    {
+        int i; // loop counter
+
+        cout << "\nCOMMANDS:\n";
+
+        for(i = 0; i < gitch_commands.size(); i++){
+            cout << "\n" << gitch_commands[i] << " = " << git_commands[i];
+    }
+
     }
 
 
