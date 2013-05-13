@@ -17,7 +17,8 @@ void beginInit();
 void runtimeExec(int argc, char* argv[]);
 void loadCommands();
 void printCommands();
-
+void replaceProccess();
+bool replace(std::string& str, const std::string& from, const std::string& to);
 
 /*GLOBAL VARIABLES*/
 
@@ -28,10 +29,9 @@ vector<string> gitch_commands;
 int main ( int argc, char *argv[] )
 {
 
-
     /* CHECK IF NO ARGUMENTS ARE PASSED */
 
-    if ( argc < 2 ) /* argc should be 2 for correct execution */
+    if ( argc < 2 ) /* argc should be 2 or more for correct execution */
     {
         /* We print argv[0] assuming it is the program name */
         printf( "usage: %s <command>\n\nRefer to online documentation for more information.\n", argv[0] );
@@ -43,6 +43,11 @@ int main ( int argc, char *argv[] )
         }else{
 
             loadCommands();
+
+            /* CALL THE FUNCTION THAT WILL ACTUALLY DETERMINE
+            PROGRAM COURSE OF ACTION NOW THAT A PROPER ARG IS SUPPLIED AND
+            ALL THE COMMANDS ARE LOADED UP */
+
             runtimeExec(argc,argv);
 
         }
@@ -53,6 +58,7 @@ int main ( int argc, char *argv[] )
 
 }
 
+/* A FUNCTION WHICH CHECKS TO SEE IF A GITCH .TXT FILE IS ALREADY WRITTEN (called upon by main)*/
 
 void checky(){
 
@@ -89,20 +95,24 @@ void checky(){
 
 }
 
+/* A FUNCTION WHICH CREATES THE GITCH .TXT FILE*/
+
 void beginInit(){
 
-        ofstream myfile("gitch.txt");
+    ofstream myfile("gitch.txt");
 
-        // then hide it
-        system("attrib +h gitch.txt");
+    // then hide it
+    system("attrib +h gitch.txt");
 
 
-        // and close the file when done
-        myfile.close();
+    // and close the file when done
+    myfile.close();
 
-        cout << "\nInitialized gitch in this location.\n";
+    cout << "\nInitialized gitch in this location.\n";
 
 }
+
+/*DETERMINE THE PROGRAM COURSE OF ACTION BASED ON COMMAND LINE ARGS*/
 
 void runtimeExec(int argc, char* argv[]){
 
@@ -114,11 +124,19 @@ void runtimeExec(int argc, char* argv[]){
 
     if((string)argv[1] == "replace"){
 
+        // Enter the replace procedure
+
+        replaceProccess();
+
     }else if((string)argv[1] == "list"){
 
         // Print the commands
 
         printCommands();
+
+    }else if((string)argv[1] == "othercmd"){
+
+
 
     }else{
 
@@ -150,6 +168,8 @@ void runtimeExec(int argc, char* argv[]){
 
 
 }
+
+/* LOAD UP ALL THE STORED COMMANDS GITCH HAS PRESET*/
 
 void loadCommands(){
 
@@ -223,5 +243,75 @@ void printCommands(){
 
 }
 
+/* Called when the user specifies to replace something */
+
+void replaceProccess(){
 
 
+    int i;
+    int testy = 1;
+    string shorthand;
+    string longhand;
+
+    while(true){
+
+        testy = 1;
+
+        printf("\nEnter the shorthand for the command:\n");
+
+        cin >> shorthand;
+
+        // Check to see if a shorthand like this already exists
+
+        for(i = 0; i < gitch_commands.size(); i++){
+
+            if(shorthand == gitch_commands[i]){
+
+                printf("\nYou've already set up this shorthand command!\nPlease enter another one.\n");
+                testy = 0;
+
+            }
+        }
+
+        if(testy == 1){
+            break;
+        }
+
+    }
+    // Prompt for the actual replacement command
+
+    cout << "\nEnter the commands for git which will be represented by this shorthand:\n";
+
+    // Flush the stream
+
+    std::cin.ignore();
+
+    // Get input
+
+    std::getline(std::cin,longhand);
+
+    // Strip the first "git"
+
+    if(replace(longhand,"git","")){
+
+        // and the first whitespace character left
+
+        string::iterator it;
+        it = longhand.begin();
+        longhand.erase(it);
+
+    }
+
+    cout << "\n" << longhand << "\n";
+}
+
+
+/* A COMPACT FINCTION FOR REPLACING THE FIRST OCCURENCE OF GIT*/
+
+bool replace(std::string& str, const std::string& from, const std::string& to) {
+    size_t start_pos = str.find(from);
+    if(start_pos == std::string::npos)
+        return false;
+    str.replace(start_pos, from.length(), to);
+    return true;
+}
