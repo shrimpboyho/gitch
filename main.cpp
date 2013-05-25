@@ -302,7 +302,20 @@ void replaceProccess(){
 
     }
 
-    cout << "\n" << longhand << "\n";
+    cout << "\n" << "Setting up gitch command for: "<< longhand << "\n";
+
+    /* BEGIN THE INJECT INTO THE FILE PROCCESS */
+
+    std::ofstream outInjector;
+
+     // std::ios::app is the open mode "append" meaning
+     // new data will be written to the end of the file.
+     outInjector.open("gitch.txt", std::ios::app);
+
+     outInjector << shorthand << "%" << longhand << ";";
+
+     outInjector.close();
+
 }
 
 
