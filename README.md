@@ -35,3 +35,23 @@ with the shorthand:
 
 ```gitch yank```
 
+###So how do I make my own custom command?
+
+Simple. Take a look at the command line stuff below:
+
+
+
+```C:\testingground>gitch replace
+
+Enter the shorthand for the command:
+connect
+
+Enter the commands for git which will be represented by this shorthand:
+git remote add origin https://github.com/user/repo.git
+
+Setting up gitch command for: remote add origin https://github.com/user/repo.git
+
+
+C:\testingground>gitch connect```
+
+
